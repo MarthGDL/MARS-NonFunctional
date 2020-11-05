@@ -19,7 +19,7 @@
           </elementProp>
           <elementProp name="" elementType="Header">
             <stringProp name="Header.name">Authorization</stringProp>
-            <stringProp name="Header.value">Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZjU3NWYxYWRmNmY1NDAwMDExNjVlZjAiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjYwOTY4IiwiaWF0IjoxNjAyMjUxNDc3LCJleHAiOjE2MDIyNTUwNzcsInVuaXF1ZV9uYW1lIjoiNWY1NzVmMWFkZjZmNTQwMDAxMTY1ZWYwIn0.8tPpyUbQVtRkKOhTSBAPcLHNX2yKlBC8TACMZNncwIg</stringProp>
+            <stringProp name="Header.value">Bearer ${token}</stringProp>
           </elementProp>
         </collectionProp>
         <stringProp name="TestPlan.comments">HTTP Header manager with the Token</stringProp>
@@ -28,7 +28,7 @@
       <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
         <stringProp name="delimiter">,</stringProp>
         <stringProp name="fileEncoding"></stringProp>
-        <stringProp name="filename">C:/Users/limbo/Documents/VisualStudio2019/MVP-MARS/LogData.txt</stringProp>
+        <stringProp name="filename">C:/Users/limbo/Documents/VisualStudio2019/MVP-MARS/mars-nonfunctional/LogData.txt</stringProp>
         <boolProp name="ignoreFirstLine">false</boolProp>
         <boolProp name="quotedData">true</boolProp>
         <boolProp name="recycle">true</boolProp>
@@ -92,8 +92,8 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">50</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">5</stringProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration">0</stringProp>
         <stringProp name="ThreadGroup.delay">0</stringProp>
@@ -150,15 +150,12 @@
                 </collectionProp>
               </HeaderManager>
               <hashTree/>
-              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor" enabled="true">
-                <stringProp name="TestPlan.comments">This will extract the Token to use it dynamically</stringProp>
-                <stringProp name="RegexExtractor.useHeaders">message</stringProp>
-                <stringProp name="RegexExtractor.refname">token</stringProp>
-                <stringProp name="RegexExtractor.regex">{&quot;token&quot;:&quot;(.+?)&quot;</stringProp>
-                <stringProp name="RegexExtractor.template">$1$</stringProp>
-                <stringProp name="RegexExtractor.default">&quot;Error&quot;</stringProp>
-                <stringProp name="RegexExtractor.match_number">1</stringProp>
-              </RegexExtractor>
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
+                <stringProp name="JSONPostProcessor.referenceNames">token</stringProp>
+                <stringProp name="JSONPostProcessor.jsonPathExprs">$..token.token</stringProp>
+                <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+                <stringProp name="JSONPostProcessor.defaultValues">FAIL</stringProp>
+              </JSONPostProcessor>
               <hashTree/>
             </hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="isUserAuthenticated" enabled="true">
