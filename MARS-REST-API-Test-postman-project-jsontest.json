@@ -1,0 +1,337 @@
+{
+	"info": {
+		"_postman_id": "5d4ebf03-9acb-433e-a384-46bbb1bae212",
+		"name": "jsontest.com API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "validate.jsontest",
+			"item": [
+				{
+					"name": "Positive tests",
+					"item": [
+						{
+							"name": "json parameter is valid object",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "4c9ab05a-e1cf-488d-92cc-b0321706441c",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"The parameter is object\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.object_or_array).to.eql(\"object\");",
+											"});",
+											"pm.test(\"Validate is true\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.validate).to.eql(true);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://validate.jsontest.com/?json={\"name\":\"John\", \"age\":\"30\",\"car\":null}",
+									"protocol": "http",
+									"host": [
+										"validate",
+										"jsontest",
+										"com"
+									],
+									"path": [
+										""
+									],
+									"query": [
+										{
+											"key": "json",
+											"value": "{\"name\":\"John\", \"age\":\"30\",\"car\":null}"
+										}
+									]
+								},
+								"description": "Validates a given JSON object against the org.json reference parser."
+							},
+							"response": []
+						},
+						{
+							"name": "json parameter is valid array",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8c2010c7-c766-4175-8857-f70daef4bb92",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"The parameter is array\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.object_or_array).to.eql(\"array\");",
+											"});",
+											"pm.test(\"Validate is true\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.validate).to.eql(true);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://validate.jsontest.com/?json=[\"John\",\"30\",null]",
+									"protocol": "http",
+									"host": [
+										"validate",
+										"jsontest",
+										"com"
+									],
+									"path": [
+										""
+									],
+									"query": [
+										{
+											"key": "json",
+											"value": "[\"John\",\"30\",null]"
+										}
+									]
+								},
+								"description": "Validates a given JSON object against the org.json reference parser."
+							},
+							"response": []
+						}
+					],
+					"description": "Valid Json parameters pass in, the JSON object/array was parsed successfully.",
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Negative tests Copy",
+					"item": [
+						{
+							"name": "json parameter is invalid object",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "b527a989-8fa8-4bb2-9782-edb0a81f719e",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"The parameter is object\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.object_or_array).to.eql(\"object\");",
+											"});",
+											"pm.test(\"Validate is false\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.validate).to.eql(false);",
+											"    pm.expect(jsonData.error_info).to.eql(\"This error came from the org.json reference parser.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://validate.jsontest.com/?json={\"name\":\"John\": \"age\":\"30\",\"car\":null}",
+									"protocol": "http",
+									"host": [
+										"validate",
+										"jsontest",
+										"com"
+									],
+									"path": [
+										""
+									],
+									"query": [
+										{
+											"key": "json",
+											"value": "{\"name\":\"John\": \"age\":\"30\",\"car\":null}"
+										}
+									]
+								},
+								"description": "Validates a given JSON object against the org.json reference parser."
+							},
+							"response": []
+						},
+						{
+							"name": "json parameter is invalid array",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "1d69b82f-e6b1-46ee-b479-c30b61965c2b",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"The parameter is array\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.object_or_array).to.eql(\"array\");",
+											"});",
+											"pm.test(\"Validate is false\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.validate).to.eql(false);",
+											"    pm.expect(jsonData.error_info).to.eql(\"This error came from the org.json reference parser.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://validate.jsontest.com/?json=[\"John\",\"30\",null",
+									"protocol": "http",
+									"host": [
+										"validate",
+										"jsontest",
+										"com"
+									],
+									"path": [
+										""
+									],
+									"query": [
+										{
+											"key": "json",
+											"value": "[\"John\",\"30\",null"
+										}
+									]
+								},
+								"description": "Validates a given JSON object against the org.json reference parser."
+							},
+							"response": []
+						}
+					],
+					"description": "Invalid Json parameters pass in, the JSON object/array was parsed failed.",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "3e69e604-2a14-4c63-b2c8-448bd0f2c3cf",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "eaf1de17-00c8-48a2-adbf-49654c9acccc",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"description": "Validates a given JSON object against the org.json reference parser.",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "data.jsontest",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f777f1cb-b9b8-4df4-b5b3-4bf2975f88b9",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"console.log(\"Current time is  \" + pm.response.json().date + \" \" + pm.response.json().time);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://date.jsontest.com/",
+					"protocol": "http",
+					"host": [
+						"date",
+						"jsontest",
+						"com"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "Get current time"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

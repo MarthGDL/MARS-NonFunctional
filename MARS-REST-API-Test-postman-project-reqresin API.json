@@ -1,0 +1,707 @@
+{
+	"info": {
+		"_postman_id": "046dd94e-c715-4386-ac0e-2a7fc9517358",
+		"name": "reqres.in API",
+		"description": "The API test of https://reqres.in/",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Positive tests",
+			"item": [
+				{
+					"name": "LIST USERS",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4b232654-dad9-4ee9-b35c-a6495454e3ba",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/users?page=2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SINGLE USER",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "09ed86f5-a388-44a4-8d89-671c2f7b0aad",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/user/2\n",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"2\n"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LIST <RESOURCE>",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b467062e-46b7-44d9-838b-2dc478465e6e",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/unknow",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"unknow"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SINGLE <RESOURCE>",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "90258407-c7a1-4423-8631-8b053955998c",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/unknow/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"unknow",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE NEW USER",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c84aaee9-ba08-4766-ba3f-3d6a2afd4049",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"New user is created\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var user_name = pm.collectionVariables.get(\"user_name\");",
+									"    var user_job = pm.collectionVariables.get(\"user_job\");",
+									"    pm.expect(jsonData.name).to.eql(user_name);",
+									"    pm.expect(jsonData.job).to.eql(user_job);",
+									"    console.log(\"user name is \" + user_name + \", job is \" + user_job);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"{{user_name}}\",\n    \"job\":\"{{user_job}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/\n",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"\n"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE THE USER",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b5c53012-88fd-4bab-b8e3-6876efc62d7d",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"User 'morpheus' is updated\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var user_name = pm.collectionVariables.get(\"user_name\");",
+									"    pm.expect(jsonData.name).to.eql(user_name);",
+									"    pm.expect(jsonData.job).to.eql(\"zion resident\");",
+									"    console.log(\"user name is \" + user_name + \", update job is zion resident\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "90f70232-8e58-414a-8b5f-d792f0fa24f1",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"{{user_name}}\",\n    \"job\":\"zion resident\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/\n",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"\n"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE THE USER",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2a42be20-0128-44ea-83ab-456b6b79c901",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"User is updated\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var user_name = pm.collectionVariables.get(\"user_name\");",
+									"    var old_job = pm.collectionVariables.get(\"user_job\");",
+									"    console.log(\"user name is \" + user_name + \", old job is \" + old_job);",
+									"    pm.expect(jsonData.name).to.eql(user_name);",
+									"    pm.expect(jsonData.job).to.eql(\"team member\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"{{user_name}}\",\n    \"job\": \"team member\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/\n",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"\n"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE THE USER",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d289f154-9a1c-4346-9d0d-330aacc0a987",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "002df619-6720-4dde-bc93-7e53947af3b6",
+								"exec": [
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/2\n",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"2\n"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REGISTER - SUCCESSFUL",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8597f216-fa0a-424f-a7ab-2f547efb4ef0",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"{{email}}\",\n    \"password\": \"{{password}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LOGIN - SUCCESSFUL",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "43d5ae03-65b5-4cce-b3e2-7a2523e5fa85",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"{{email}}\",\n    \"password\": \"{{password}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELAYED RESPONSE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "47dd3167-746b-4cba-bfc6-fbc46b5f4ed7",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/users?delay=3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "delay",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "The API test of https://reqres.in/",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "62a0901f-9bd9-477f-8e97-adc1f03682d5",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "128b4275-d933-44b2-8849-59ae1632e4b9",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Negative tests",
+			"item": [
+				{
+					"name": "SINGLE USER NOT FOUND",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0adc2438-f531-4eba-8ec4-c63ddf5eafb3",
+								"exec": [
+									"pm.test(\"The user is not found.\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"pm.test(\"Body is correct\", function () {",
+									"    pm.response.to.have.body(\"{}\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/user/24\n",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"24\n"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SINGLE <RESOURCE> NOT FOUND",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REGISTER - UNSUCCESSFUL",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "57380bcb-8ab4-4d3c-90f1-9894b01b40c4",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Missing password\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(\"Missing password\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"sydney@fife\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LOGIN - UNSUCCESSFUL",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "907c4f83-b8dc-4710-8d4e-f65de1a98ecb",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Missing password\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(\"Missing password\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"sydney@fife\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "517f4a99-feb6-4841-ba20-fa176d1ea5cf",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "cbf1f760-b52e-4590-8fc5-2080311a9dab",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "5f1ccae0-0e6d-4a20-b58c-25e888566806",
+			"key": "url",
+			"value": "https://reqres.in"
+		},
+		{
+			"id": "a57900a0-26df-4afe-9294-54847376c252",
+			"key": "user_name",
+			"value": "morpheus"
+		},
+		{
+			"id": "7f812833-333d-4fe4-bf71-63cc7337a47f",
+			"key": "user_job",
+			"value": "leader"
+		},
+		{
+			"id": "850896fb-7946-4181-a22a-2803e232caa2",
+			"key": "email",
+			"value": "eve.holt@reqres.in"
+		},
+		{
+			"id": "e413a70d-3b8c-4774-be12-923c04275bd3",
+			"key": "password",
+			"value": "pistol"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
